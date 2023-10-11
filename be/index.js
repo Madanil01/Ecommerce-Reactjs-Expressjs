@@ -51,7 +51,7 @@ app.use(
 app.use(
   cors({
     credentials: true,
-    origin: "http://localhost:3000",
+    origin: "https://genuine-crostata-5e1251.netlify.app",
   })
 );
 
