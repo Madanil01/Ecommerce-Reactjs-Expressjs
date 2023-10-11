@@ -22,10 +22,10 @@ import CheckOut from './pages/user/CheckOut';
 function App() {
   return (
     <div>
-      <BrowserRouter >
+      <BrowserRouter basename="/react">
         <Routes>
           <Route path="/" element={<Login />} />
-          <Route path="register" element={<Register />} />
+          <Route path="/register" element={<Register />} />
 
           <Route path="/restrict" element={<RestrictPage />} />
           <Route path="/admin/dashboard" element={<Dashboard />} />
