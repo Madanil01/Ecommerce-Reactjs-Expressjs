@@ -25,7 +25,7 @@ function App() {
       <BrowserRouter basename="/">
         <Routes>
           <Route path="/" element={<Login />} />
-          <Route path="register" element={<Register />} />
+          <Route path="/register" element={<Register />} />
 
           <Route path="/restrict" element={<RestrictPage />} />
           <Route path="/admin/dashboard" element={<Dashboard />} />
