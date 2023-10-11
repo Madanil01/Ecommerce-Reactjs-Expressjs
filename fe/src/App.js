@@ -22,7 +22,7 @@ import CheckOut from './pages/user/CheckOut';
 function App() {
   return (
     <div>
-      <BrowserRouter basename="/fe">
+      <BrowserRouter >
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/register" element={<Register />} />
