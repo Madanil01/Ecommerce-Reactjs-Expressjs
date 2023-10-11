@@ -22,7 +22,7 @@ import CheckOut from './pages/user/CheckOut';
 function App() {
   return (
     <div>
-      <BrowserRouter basename="/react">
+      <BrowserRouter basename="/fe/src/App.js">
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/register" element={<Register />} />
