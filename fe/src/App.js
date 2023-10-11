@@ -22,7 +22,7 @@ import CheckOut from './pages/user/CheckOut';
 function App() {
   return (
     <div>
-      <BrowserRouter basename="https://main--genuine-crostata-5e1251.netlify.app/">
+      <BrowserRouter basename="/">
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/register" element={<Register />} />
