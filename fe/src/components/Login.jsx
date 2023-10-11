@@ -1,0 +1,85 @@
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { LoginUser, reset } from "../features/authSlice";
+
+const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { user, isError, isSuccess, isLoading, message} = useSelector(
+    (state) => state.auth
+  );
+
+  useEffect(() => {
+    if ((user || isSuccess) && (user.role ==="admin")){
+      navigate("/admin/dashboard");
+    }
+    if ((user || isSuccess) && (user.role === "user")) {
+      navigate("/home");
+    }
+    dispatch(reset());
+  }, [user, isSuccess, dispatch, navigate]);
+
+  const Auth = (e) => {
+    e.preventDefault();
+    dispatch(LoginUser({ email, password }));
+  };
+
+  return (
+    <section className="hero is-fullheight is-fullwidth font-montserrat">
+      <div className="hero-body">
+        <div className="container">
+          <div className="columns is-centered">
+            <div className="column is-5 shadow-xl border ">
+              <form onSubmit={Auth} className="px-4 py-4">
+                {isError && <p className="has-text-centered">{message}</p>}
+                <h1 className="text-[35px] text-center font-semibold text-purple-700">
+                  Sign In
+                </h1>
+                <div className="field">
+                  <label className="label">Email</label>
+                  <div className="control">
+                    <input
+                      type="text"
+                      className="input"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="Email"
+                    />
+                  </div>
+                </div>
+                <div className="field">
+                  <label className="label">Password</label>
+                  <div className="control">
+                    <input
+                      type="password"
+                      className="input"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      placeholder="******"
+                    />
+                  </div>
+                </div>
+                <div className="field mt-5">
+                  <p>Belum Punya Akun ? <a href="/register" className="text-purple-700">Register</a></p>
+                </div>
+                <div className="field mt-5 ">
+                  <button
+                    type="submit"
+                    className="border border-purple-700 w-full py-2 rounded-md font-semibold hover:bg-purple-700 text-purple-700 hover:text-white transition ease-in-out duration-200"
+                  >
+                    {isLoading ? "Loading..." : "Login"}
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default Login;
