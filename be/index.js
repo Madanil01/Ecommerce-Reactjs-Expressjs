@@ -5,7 +5,7 @@ import dotenv from "dotenv";
 import db from "./config/Database.js";
 import SequelizeStore from "connect-session-sequelize";
 import UserRoute from "./routes/UserRoute.js";
-import ProductRoute from "./routes/ProductRoute.js";
+import ProductRoute from "./routes/ProductRoute.js"; 
 import CategoryRoute from "./routes/CategoryRoute.js";
 import VariasiRoute from "./routes/VariasiRoute.js";
 import ColorRoute from "./routes/ColorRoute.js";
