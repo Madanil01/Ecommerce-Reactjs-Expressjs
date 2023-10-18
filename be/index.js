@@ -29,14 +29,14 @@ const store = new sessionStore({
 // (async()=>{
 //     await db.sync();
 // })();
-PesananDetail.sync()
-  .then(() => {
-    console.log("Tabel Variasi telah dibuat.");
-  })
-  .catch((error) => {
-    console.error("Gagal membuat tabel Product:", error);
-  });
-app.use(
+// PesananDetail.sync()
+//   .then(() => {
+//     console.log("Tabel Variasi telah dibuat.");
+//   })
+//   .catch((error) => {
+//     console.error("Gagal membuat tabel Product:", error);
+//   });
+// app.use(
   session({
     secret: '21312313eg2hg321hvjhdsvjfvjsdvfvjsdvjvwulasnldca',
     resave: false,
