@@ -13,7 +13,7 @@ const initialState = {
 
 export const LoginUser = createAsyncThunk("user/LoginUser", async(user, thunkAPI) => {
     try {
-        const response = await axios.post('http://localhost:5000/login', {
+        const response = await axios.post('https://react-be-theta.vercel.app/login', {
             email: user.email,
             password: user.password,
             role: user.role
@@ -29,7 +29,7 @@ export const LoginUser = createAsyncThunk("user/LoginUser", async(user, thunkAPI
 
 export const getMe = createAsyncThunk("user/getMe", async(_, thunkAPI) => {
     try {
-        const response = await axios.get('http://localhost:5000/me');
+        const response = await axios.get('https://react-be-theta.vercel.app/me');
         return response.data;
     } catch (error) {
         if(error.response){
@@ -41,7 +41,7 @@ export const getMe = createAsyncThunk("user/getMe", async(_, thunkAPI) => {
 export const RegisterUser = createAsyncThunk("user/RegisterUser", async (user, thunkAPI) => {
     try {
         if (user.password === user.confPassword) {
-          const response = await axios.post("http://localhost:5000/register", {
+          const response = await axios.post("https://react-be-theta.vercel.app/register", {
             // Add the necessary data for user registration, such as name, email, password, etc.
             username: user.username,
             email: user.email,
@@ -60,7 +60,7 @@ export const RegisterUser = createAsyncThunk("user/RegisterUser", async (user, t
   }
 });
 export const LogOut = createAsyncThunk("user/LogOut", async() => {
-    await axios.delete('http://localhost:5000/logout');
+    await axios.delete('https://react-be-theta.vercel.app/logout');
 });
 
 export const authSlice = createSlice({
