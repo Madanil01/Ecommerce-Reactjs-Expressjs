@@ -31,7 +31,7 @@ const store = new sessionStore({
 // })();
 // PesananDetail.sync()
 //   .then(() => {
-//     console.log("Tabel Variasi telah dibuat.");
+//     console.log("Tabel Variasi telah dibuat."); 
 //   })
 //   .catch((error) => {
 //     console.error("Gagal membuat tabel Product:", error);
