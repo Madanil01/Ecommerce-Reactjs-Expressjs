@@ -38,7 +38,7 @@ PesananDetail.sync()
   });
 app.use(
   session({
-    secret: '21312313eg2hg321hvjhdsvjfvjsdvfvjsdvjvwulasnldca'T,
+    secret: '21312313eg2hg321hvjhdsvjfvjsdvfvjsdvjvwulasnldca',
     resave: false,
     saveUninitialized: true,
     store: store,
