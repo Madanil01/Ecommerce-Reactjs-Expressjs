@@ -57,7 +57,7 @@ app.use(
     credentials: true,
     origin: "https://tiny-cuchufli-c4e6c1.netlify.app",
   })
-);
+)
 
 app.use(express.static("public"))
 app.use(express.json());
