@@ -12,6 +12,7 @@ const db = new Sequelize(
     dialectModule: mysql2, // Needed to fix sequelize issues with WebPack
     host: process.env.DB_HOST,
     port: process.env.DB_PORT,
+    logging: false
   }
 );
 
