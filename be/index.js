@@ -36,7 +36,7 @@ const store = new sessionStore({
 //   .catch((error) => {
 //     console.error("Gagal membuat tabel Product:", error);
 //   });
-// app.use(
+app.use(
   session({
     secret: '21312313eg2hg321hvjhdsvjfvjsdvfvjsdvjvwulasnldca',
     resave: false,
