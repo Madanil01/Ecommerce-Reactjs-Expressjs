@@ -55,7 +55,7 @@ app.use("/test", (req, res) => {
 app.use(
   cors({
     credentials: true,
-    origin: "https://genuine-crostata-5e1251.netlify.app",
+    origin: "https://tiny-cuchufli-c4e6c1.netlify.app",
   })
 );
 
