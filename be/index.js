@@ -26,9 +26,9 @@ const store = new sessionStore({
   db: db,
 });
 
-// (async()=>{
-//     await db.sync();
-// })();
+(async()=>{
+    await db.sync();
+})();
 // PesananDetail.sync()
 //   .then(() => {
 //     console.log("Tabel Variasi telah dibuat.");
