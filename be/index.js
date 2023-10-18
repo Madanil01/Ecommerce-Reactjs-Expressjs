@@ -18,7 +18,7 @@ import Pesanans from "./models/PesananModel.js";
 import PesananDetail from "./models/PesananDetailModel.js";
 import Users from "./models/UserModel.js";
 
-dotenv.config();
+dotenv.config(); 
 
 const app = express();
 const sessionStore = SequelizeStore(session.Store);
