@@ -58,7 +58,12 @@ app.use(
     origin: "https://tiny--cuchufli-c4e6c1.netlify.app",
   })
 )
-
+app.options("*", (req, res) => {
+  res.header("Access-Control-Allow-Origin", "https://main--tiny-cuchufli-c4e6c1.netlify.app");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  res.sendStatus(200);
+});
 app.use(express.static("public"))
 app.use(express.json());
 app.use(FileUpload());
