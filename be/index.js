@@ -44,6 +44,7 @@ app.use(
     store: store,
     cookie: {
       secure: "auto",
+      sameSite: "lax", // Set the SameSite attribute to "Lax"
     },
   })
 );
