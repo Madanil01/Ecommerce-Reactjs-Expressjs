@@ -27,7 +27,7 @@ export const LoginUser = createAsyncThunk("user/LoginUser", async(user, thunkAPI
     }
 });
 
-export const getMe = createAsyncThunk("user/getMe", async(_, thunkAPI) => {
+export const getMe = createAsyncThunk("user/getMe", async (_, thunkAPI) => {
     try {
         const response = await axios.get('https://react-be-theta.vercel.app/me'); 
         return response.data;
