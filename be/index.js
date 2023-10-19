@@ -55,14 +55,15 @@ app.use("/test", (req, res) => {
 app.use(
   cors({
     credentials: true,
-    origin: "https://main--tiny-cuchufli-c4e6c1.netlify.app/",
+    origin: "https://main--tiny-cuchufli-c4e6c1.netlify.app",
   })
 )
-app.options("*", (req, res) => {
-  res.header("Access-Control-Allow-Origin", "https://main--tiny-cuchufli-c4e6c1.netlify.app");
-  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  res.sendStatus(200);
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "https://main--tiny-cuchufli-c4e6c1.netlify.app"); // Set the origin to your client's URL
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  res.setHeader("Access-Control-Allow-Credentials", "true"); // Allow credentials
+  next();
 });
 app.use(express.static("public"))
 app.use(express.json());
