@@ -46,12 +46,22 @@ const HomePage = () => {
 
   const [activeColor, setActiveColor] = useState(null);
 
- 
+  useEffect(() => {
+    dispatch(getMe());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (isError) {
+      navigate("/");
+    } else if (user && user.role === "admin") {
+      navigate("/restrict");
+    }
+  }, [isError, navigate, user]);
+
   // Fungsi untuk mengembalikan semua gambar
   const handleShowAllImages = () => {
     setActiveColor(null); // Set activeColor menjadi null untuk menampilkan semua gambar
   };
-
   return (
     <LayoutUser>
       <CarouselComponent />
