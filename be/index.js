@@ -43,8 +43,8 @@ app.use(
     saveUninitialized: true,
     store: store,
     cookie: {
-      secure: "auto",
-      sameSite: "lax", // Set the SameSite attribute to "Lax"
+      secure: "https",
+      sameSite: "none",
     },
   })
 );
