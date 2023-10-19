@@ -29,7 +29,9 @@ export const LoginUser = createAsyncThunk("user/LoginUser", async(user, thunkAPI
 
 export const getMe = createAsyncThunk("user/getMe", async (_, thunkAPI) => {
     try {
-        const response = await axios.get('https://react-be-theta.vercel.app/me'); 
+        const response = await axios.get('https://react-be-theta.vercel.app/me', {
+      withCredentials: true, // Include credentials in the request
+    }); 
         return response.data;
     } catch (error) {
         if(error.response){
