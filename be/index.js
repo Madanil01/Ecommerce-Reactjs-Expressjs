@@ -26,9 +26,9 @@ const store = new sessionStore({
   db: db,
 });
 
-(async()=>{
-    await db.sync();
-})();
+// (async()=>{
+//     await db.sync();
+// })();
 // PesananDetail.sync()
 //   .then(() => {
 //     console.log("Tabel Variasi telah dibuat."); 
@@ -52,12 +52,12 @@ app.use("/test", (req, res) => {
 });
 
 
-app.use(
-  cors({
-    credentials: true,
-    origin: "https://tiny-cuchufli-c4e6c1.netlify.app",
-  })
-)
+// app.use(
+//   cors({
+//     credentials: true,
+//     origin: "https://tiny-cuchufli-c4e6c1.netlify.app",
+//   })
+// )
 
 app.use(express.static("public"))
 app.use(express.json());
@@ -72,7 +72,7 @@ app.use(PesananRoute);
 app.use(PesananDetailRoute);
 app.use(AuthRoute);
 
-store.sync();
+// store.sync();
 
 app.listen(process.env.APP_PORT, () => {
   console.log("Server up and running...");
