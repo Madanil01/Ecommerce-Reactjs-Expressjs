@@ -1,126 +1,141 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
+const API_URL = "https://react-be-theta.vercel.app"; // Simpan base URL untuk mempermudah
+
 const initialState = {
-    user: null,
-    isError: false,
-    isSuccess: false,
-    isLoading: false,
-    isPage: false,
-    isRole: false,
-    message: ""
-}
+  user: null,
+  isError: false,
+  isSuccess: false,
+  isLoading: false,
+  isPage: false,
+  isRole: false,
+  message: "",
+};
 
-export const LoginUser = createAsyncThunk("user/LoginUser", async(user, thunkAPI) => {
-    try {
-        const response = await axios.post('https://react-be-theta.vercel.app/login', {
-            email: user.email,
-            password: user.password,
-            role: user.role
-        });
-        return response.data;
-    } catch (error) {
-        if(error.response){
-            const message = error.response.data.msg;
-            return thunkAPI.rejectWithValue(message);
-        }
-    }
-});
+// ✅ Login User
+export const LoginUser = createAsyncThunk("user/LoginUser", async (user, thunkAPI) => {
+  try {
+    const response = await axios.post(`${API_URL}/login`, {
+      email: user.email,
+      password: user.password,
+    }, { withCredentials: true }); // 🔥 Wajib agar cookie session tersimpan
 
-export const getMe = createAsyncThunk("user/getMe", async (_, thunkAPI) => {
-    try {
-        const response = await axios.get('https://react-be-theta.vercel.app/me', {
-      withCredentials: true, // Include credentials in the request
-    }); 
-        return response.data;
-    } catch (error) {
-        if(error.response){
-            const message = error.response.data.msg;
-            return thunkAPI.rejectWithValue(message);
-        }
-    }
-});
-export const RegisterUser = createAsyncThunk("user/RegisterUser", async (user, thunkAPI) => {
-    try {
-        if (user.password === user.confPassword) {
-          const response = await axios.post("https://react-be-theta.vercel.app/register", {
-            // Add the necessary data for user registration, such as name, email, password, etc.
-            username: user.username,
-            email: user.email,
-            password: user.password,
-          });
-
-          return response.data;
-        }
-        const message = "Password dan Confirmation Tidak Cocok";
-        return thunkAPI.rejectWithValue(message);
+    return response.data;
   } catch (error) {
-    if (error.response) {
-      const message = error.response.data.msg;
-      return thunkAPI.rejectWithValue(message);
-    }
+    return thunkAPI.rejectWithValue(error.response?.data?.msg || "Login gagal");
   }
 });
-export const LogOut = createAsyncThunk("user/LogOut", async() => {
-    await axios.delete('https://react-be-theta.vercel.app/logout');
+
+// ✅ Get User Info (Cek session)
+export const getMe = createAsyncThunk("user/getMe", async (_, thunkAPI) => {
+  try {
+    const response = await axios.get(`${API_URL}/me`, { withCredentials: true });
+    return response.data;
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error.response?.data?.msg || "Tidak dapat mengambil data user");
+  }
 });
 
-export const authSlice = createSlice({
-    name: "auth",
-    initialState,
-    reducers:{
-        reset: (state) => initialState,
-        updatePesananDetail: (state, action) => {
-            state.jumlahPesananDetail = action.payload;
-    },
-    },
-    extraReducers:(builder) =>{
-        builder.addCase(LoginUser.pending, (state) =>{
-            state.isLoading = true;
-        });
-        builder.addCase(LoginUser.fulfilled, (state, action) =>{
-            state.isLoading = false;
-            state.isSuccess = true;
-            state.user = action.payload;
-            state.isPage = true;
-        });
-        builder.addCase(LoginUser.rejected, (state, action) =>{
-            state.isLoading = false;
-            state.isError = true;
-            state.message = action.payload;
-        })
-         builder.addCase(RegisterUser.pending, (state) => {
-           state.isLoading = true;
-         });
-         builder.addCase(RegisterUser.fulfilled, (state, action) => {
-           state.isLoading = false;
-           state.isSuccess = true;
-             state.user = action.payload;
-             state.message = "Berhasil Membuat Akun";
-           state.isPage = true;
-         });
-         builder.addCase(RegisterUser.rejected, (state, action) => {
-           state.isLoading = false;
-           state.isError = true;
-           state.message = action.payload;
-         });
-
-        // Get User Login
-        builder.addCase(getMe.pending, (state) =>{
-            state.isLoading = true;
-        });
-        builder.addCase(getMe.fulfilled, (state, action) =>{
-            state.isLoading = false;
-            state.isSuccess = true;
-            state.user = action.payload;
-        });
-        builder.addCase(getMe.rejected, (state, action) =>{
-            state.isLoading = false;
-            state.isError = true;
-            state.message = action.payload;
-        })
+// ✅ Register User
+export const RegisterUser = createAsyncThunk("user/RegisterUser", async (user, thunkAPI) => {
+  try {
+    if (user.password !== user.confPassword) {
+      return thunkAPI.rejectWithValue("Password dan Konfirmasi Password tidak cocok");
     }
+
+    const response = await axios.post(`${API_URL}/register`, {
+      username: user.username,
+      email: user.email,
+      password: user.password,
+    });
+
+    return response.data;
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error.response?.data?.msg || "Registrasi gagal");
+  }
 });
-export const { updatePesananDetail } = authSlice.actions;
-export const {reset} = authSlice.actions;
+
+// ✅ Logout User
+export const LogOut = createAsyncThunk("user/LogOut", async (_, thunkAPI) => {
+  try {
+    await axios.delete(`${API_URL}/logout`, { withCredentials: true }); // 🔥 Pastikan session terhapus
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error.response?.data?.msg || "Logout gagal");
+  }
+});
+
+// ✅ Redux Slice
+export const authSlice = createSlice({
+  name: "auth",
+  initialState,
+  reducers: {
+    reset: () => initialState, // Reset ke state awal
+    updatePesananDetail: (state, action) => {
+      state.jumlahPesananDetail = action.payload;
+    },
+  },
+  extraReducers: (builder) => {
+    builder
+      // 🚀 Handle Login
+      .addCase(LoginUser.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(LoginUser.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.user = action.payload;
+        state.isPage = true;
+      })
+      .addCase(LoginUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+
+      // 🚀 Handle GetMe (Cek Session)
+      .addCase(getMe.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getMe.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.user = action.payload;
+      })
+      .addCase(getMe.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+
+      // 🚀 Handle Register
+      .addCase(RegisterUser.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(RegisterUser.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.user = action.payload;
+        state.message = "Berhasil Membuat Akun";
+        state.isPage = true;
+      })
+      .addCase(RegisterUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+
+      // 🚀 Handle Logout
+      .addCase(LogOut.fulfilled, (state) => {
+        state.user = null;
+        state.isSuccess = false;
+        state.isError = false;
+        state.isLoading = false;
+        state.isPage = false;
+        state.message = "Berhasil Logout";
+      });
+  },
+});
+
+export const { updatePesananDetail, reset } = authSlice.actions;
 export default authSlice.reducer;
