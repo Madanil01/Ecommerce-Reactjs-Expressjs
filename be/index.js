@@ -52,12 +52,12 @@ app.use("/test", (req, res) => {
 });
 
 
-app.use(
-  cors({
-    credentials: true,
-    origin: "https://tiny-cuchufli-c4e6c1.netlify.app",
-  })
-)
+// app.use(
+//   cors({
+//     credentials: true,
+//     origin: "https://tiny-cuchufli-c4e6c1.netlify.app",
+//   })
+// )
 // app.use((req, res, next) => {
 //   res.setHeader("Access-Control-Allow-Origin", "ecommerce-reactjs-expressjs.vercel.app"); // Set the origin to your client's URL
 //   res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
