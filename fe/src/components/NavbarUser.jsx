@@ -57,7 +57,7 @@ const NavbarUser = () => {
   const getPesananByUserUuid = async (param) => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/pesananuser/${param}`
+        `https://react-be-theta.vercel.app/pesananuser/${param}`
       );
       if(response.data != null){
        if (response.data.statusPesanan === 0) {
