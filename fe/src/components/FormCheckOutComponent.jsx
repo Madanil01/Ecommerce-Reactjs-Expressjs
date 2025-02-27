@@ -15,7 +15,7 @@ const FormCheckOutComponent = ({ userUuid, pesananUuid }) => {
     try {
       console.log(userUuid);
       const response = await axios.get(
-        `http://localhost:5000/users/${userUuid}`
+        `https://react-be-theta.vercel.app/users/${userUuid}`
       );
       setUsername(response.data.username);
       setPassword("");
@@ -39,13 +39,13 @@ const FormCheckOutComponent = ({ userUuid, pesananUuid }) => {
         // Make sure 'password' is defined or set it to an empty string if it's not defined
 
         const response = await axios.patch(
-          `http://localhost:5000/users/${userUuid}`,
+          `https://react-be-theta.vercel.app/users/${userUuid}`,
           {
             username: username,
             email: email,
             nohp: nohp,
             alamat: alamat,
-            password: password // Include the hashed password in the request
+            password: password, // Include the hashed password in the request
           }
         );
         updateStatusPesanan();
@@ -61,12 +61,12 @@ const FormCheckOutComponent = ({ userUuid, pesananUuid }) => {
     try {
       console.log(pesananUuid);
       const response = await axios.patch(
-        `http://localhost:5000/pesanan/${pesananUuid}`,
+        `https://react-be-theta.vercel.app/pesanan/${pesananUuid}`,
         {
           statusPesanan: 1,
         }
       );
-      console.log(statusPesanan)
+      console.log(statusPesanan);
       console.log(response.data);
     } catch (error) {
       console.log(error.message);

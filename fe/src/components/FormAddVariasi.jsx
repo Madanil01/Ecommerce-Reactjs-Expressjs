@@ -29,7 +29,7 @@ const FormAddVariasi = () => {
     const getVariasi = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/variasi?productId=${productId}`
+          `https://react-be-theta.vercel.app/variasi?productId=${productId}`
         );
         // Menghitung jumlah stock dari data variasi
         const totalStock = response.data.reduce(
@@ -49,7 +49,7 @@ const FormAddVariasi = () => {
     const getProductById = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/products/${id}`
+          `https://react-be-theta.vercel.app/products/${id}`
         );
         setProductId(response.data.id);
         setProductUuid(response.data.uuid);
@@ -69,7 +69,7 @@ const FormAddVariasi = () => {
   const getCategoryById = async (categoryId) => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/category/${categoryId}`
+        `https://react-be-theta.vercel.app/category/${categoryId}`
       );
       setCategory(response.data.name);
     } catch (error) {
@@ -77,25 +77,29 @@ const FormAddVariasi = () => {
     }
   };
 
-    useEffect(() => {
-      // Mengambil daftar kategori saat komponen dimuat
-      const getColor = async () => {
-        try {
-          const response = await axios.get("http://localhost:5000/colors");
-          setColorData(response.data); // Menyimpan daftar kategori dalam state
-        } catch (error) {
-          console.error("Gagal mengambil color:", error);
-        }
-      };
+  useEffect(() => {
+    // Mengambil daftar kategori saat komponen dimuat
+    const getColor = async () => {
+      try {
+        const response = await axios.get(
+          "https://react-be-theta.vercel.app/colors"
+        );
+        setColorData(response.data); // Menyimpan daftar kategori dalam state
+      } catch (error) {
+        console.error("Gagal mengambil color:", error);
+      }
+    };
 
-      getColor();
-    }, []);
-  
+    getColor();
+  }, []);
+
   useEffect(() => {
     // Mengambil daftar kategori saat komponen dimuat
     const getMemory = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/memorys");
+        const response = await axios.get(
+          "https://react-be-theta.vercel.app/memorys"
+        );
         setMemoryData(response.data); // Menyimpan daftar kategori dalam state
       } catch (error) {
         console.error("Gagal mengambil memory:", error);
@@ -106,14 +110,17 @@ const FormAddVariasi = () => {
 
   const saveVariasi = async () => {
     try {
-      const response = await axios.post("http://localhost:5000/variasi", {
-        memory: memory,
-        price: price,
-        productId: productId,
-        productUuid: productUuid,
-        color: color,
-        stock: stock,
-      });
+      const response = await axios.post(
+        "https://react-be-theta.vercel.app/variasi",
+        {
+          memory: memory,
+          price: price,
+          productId: productId,
+          productUuid: productUuid,
+          color: color,
+          stock: stock,
+        }
+      );
       navigate(`/admin/variasi/${id}`);
       setMessage(response.data.msg);
       setMessageVisible(true);

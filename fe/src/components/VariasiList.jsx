@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
-const VariasiList = ({dataVariasi}) => {
+const VariasiList = ({ dataVariasi }) => {
   const [variasiData, setVariasiData] = useState([]); // State untuk menyimpan data variasi
   const [currentPage, setCurrentPage] = useState(1); // State untuk halaman saat ini
   const [variasiPerPage] = useState(5); // Jumlah variasi per halaman
@@ -14,7 +14,7 @@ const VariasiList = ({dataVariasi}) => {
     const getProductById = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/products/${id}`
+          `https://react-be-theta.vercel.app/products/${id}`
         );
         const productData = response.data;
         // Setelah produk diambil, panggil fungsi untuk mengambil variasi berdasarkan productId
@@ -33,9 +33,9 @@ const VariasiList = ({dataVariasi}) => {
   const getVariasiByProductId = async (productId) => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/variasi/product/${productId}`
-        );
-        
+        `https://react-be-theta.vercel.app/variasi/product/${productId}`
+      );
+
       const sortedVariasiData = response.data.sort((a, b) => {
         return parseInt(a.memory, 10) - parseInt(b.memory, 10);
       });
@@ -46,17 +46,17 @@ const VariasiList = ({dataVariasi}) => {
   };
 
   // Fungsi untuk menghapus variasi berdasarkan uuid
- const deleteVariasi = async (uuid) => {
-   try {
-     await axios.delete(`http://localhost:5000/variasi/${uuid}`);
-     // Perbarui daftar variasi setelah menghapus variasi
-     setVariasiData((prevVariasiData) =>
-       prevVariasiData.filter((variasi) => variasi.uuid !== uuid)
-     );
-   } catch (error) {
-     console.error("Gagal menghapus variasi:", error);
-   }
- };
+  const deleteVariasi = async (uuid) => {
+    try {
+      await axios.delete(`https://react-be-theta.vercel.app/variasi/${uuid}`);
+      // Perbarui daftar variasi setelah menghapus variasi
+      setVariasiData((prevVariasiData) =>
+        prevVariasiData.filter((variasi) => variasi.uuid !== uuid)
+      );
+    } catch (error) {
+      console.error("Gagal menghapus variasi:", error);
+    }
+  };
 
   // Hitung nomor awal pada halaman saat ini
   const indexOfLastVariasi = currentPage * variasiPerPage;

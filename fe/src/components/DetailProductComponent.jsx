@@ -36,7 +36,7 @@ const DetailProductComponent = ({ userUuid }) => {
     const getProductById = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/products/${id}`
+          `https://react-be-theta.vercel.app/products/${id}`
         );
         setProductId(response.data.id);
         setProductUuid(response.data.uuid);
@@ -56,7 +56,7 @@ const DetailProductComponent = ({ userUuid }) => {
   const getCategoryById = async (categoryId) => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/category/${categoryId}`
+        `https://react-be-theta.vercel.app/category/${categoryId}`
       );
       setCategory(response.data.name);
     } catch (error) {
@@ -69,7 +69,7 @@ const DetailProductComponent = ({ userUuid }) => {
     const getVariasi = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/variasi?productId=${productId}`
+          `https://react-be-theta.vercel.app/variasi?productId=${productId}`
         );
 
         // Memfilter variasi berdasarkan productId
@@ -142,15 +142,18 @@ const DetailProductComponent = ({ userUuid }) => {
     try {
       // Cek apakah pesanan dengan status 0 sudah ada
       const existingPesanan = await axios.get(
-        `http://localhost:5000/pesananuser/${userUuid}`
+        `https://react-be-theta.vercel.app/pesananuser/${userUuid}`
       );
 
       if (existingPesanan.data === null) {
         // Jika tidak ada pesanan dengan status 0, maka buat pesanan baru
-        const response = await axios.post("http://localhost:5000/pesanan", {
-          userUuid: userUuid,
-          total: purchaseQuantity * selectedVariasiPrice,
-        });
+        const response = await axios.post(
+          "https://react-be-theta.vercel.app/pesanan",
+          {
+            userUuid: userUuid,
+            total: purchaseQuantity * selectedVariasiPrice,
+          }
+        );
         // response.data akan berisi data pesanan yang telah dibuat
         const pesananUuid = response.data.uuid;
         const total = response.data.total;
@@ -168,7 +171,7 @@ const DetailProductComponent = ({ userUuid }) => {
   const savePesananDetail = async (pesananUuid, total) => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/pesanandetailconst/${pesananUuid}`
+        `https://react-be-theta.vercel.app/pesanandetailconst/${pesananUuid}`
       );
       const subtotal = purchaseQuantity * selectedVariasiPrice;
       let foundIndex = -1; // Inisialisasi indeks pencarian
@@ -195,7 +198,7 @@ const DetailProductComponent = ({ userUuid }) => {
           const pesananDetailtotal = response.data[foundIndex].subtotal;
           const newSubtotal = pesananDetailtotal + subtotal;
           await axios.patch(
-            `http://localhost:5000/pesanandetail/${pesananDetailUuid}`,
+            `https://react-be-theta.vercel.app/pesanandetail/${pesananDetailUuid}`,
             {
               pesananUuid: pesananUuid,
               productId: productId,
@@ -206,11 +209,14 @@ const DetailProductComponent = ({ userUuid }) => {
             }
           );
 
-          await axios.patch(`http://localhost:5000/pesanan/${pesananUuid}`, {
-            total: newSubtotal,
-            tanggalPesanan: new Date().toISOString(),
-            // Menambahkan subtotal ke total yang ada
-          });
+          await axios.patch(
+            `https://react-be-theta.vercel.app/pesanan/${pesananUuid}`,
+            {
+              total: newSubtotal,
+              tanggalPesanan: new Date().toISOString(),
+              // Menambahkan subtotal ke total yang ada
+            }
+          );
           await updateTotalPesanan(pesananUuid);
           setMsg("Berhasil Menambahkan Ke keranjang");
           setMessageVisible(true);
@@ -225,7 +231,7 @@ const DetailProductComponent = ({ userUuid }) => {
       //buat pesanan detail baru jika tidak ketemu pesanan detail dengan produk dan variasi yang sama
       if (foundIndex === -1) {
         // Menambahkan pesanan detail
-        await axios.post("http://localhost:5000/pesanandetail", {
+        await axios.post("https://react-be-theta.vercel.app/pesanandetail", {
           pesananUuid: pesananUuid,
           productId: productId, // Gantilah dengan nilai productId yang sesuai
           variasiId: selectedVariasi, // Variasi yang dipilih
@@ -253,7 +259,7 @@ const DetailProductComponent = ({ userUuid }) => {
 
       // Dapatkan jumlah pesanan terbaru
       // const response = await axios.get(
-      //   `http://localhost:5000/pesanan?userUuid=${userUuid}&statusPesanan=0`
+      //   `https://react-be-theta.vercel.app/pesanan?userUuid=${userUuid}&statusPesanan=0`
       // );
       // const jumlahPesananDetail = response.data.length;
 
@@ -274,7 +280,7 @@ const DetailProductComponent = ({ userUuid }) => {
     try {
       // Mengambil semua pesanandetail berdasarkan pesananUuid
       const pesananDetailResponse = await axios.get(
-        `http://localhost:5000/pesanandetailconst/${param}`
+        `https://react-be-theta.vercel.app/pesanandetailconst/${param}`
       );
 
       const pesananDetailData = pesananDetailResponse.data;
@@ -286,7 +292,7 @@ const DetailProductComponent = ({ userUuid }) => {
       }
 
       // Memperbarui total pesanan pada tabel pesanan
-      await axios.patch(`http://localhost:5000/pesanan/${param}`, {
+      await axios.patch(`https://react-be-theta.vercel.app/pesanan/${param}`, {
         total: totalHargaPesanan,
       });
 

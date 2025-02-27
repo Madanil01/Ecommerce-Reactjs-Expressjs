@@ -26,7 +26,7 @@ const CartUserComponent = ({ userUuid }) => {
   const getProductData = async (productId) => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/productsconst/${productId}`
+        `https://react-be-theta.vercel.app/productsconst/${productId}`
       );
       return response.data;
     } catch (error) {
@@ -38,7 +38,7 @@ const CartUserComponent = ({ userUuid }) => {
   const getVariasiData = async (productId, variasiId) => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/variasiconst/${variasiId}?productId=${productId}&`
+        `https://react-be-theta.vercel.app/variasiconst/${variasiId}?productId=${productId}&`
       );
       return response.data;
     } catch (error) {
@@ -50,7 +50,7 @@ const CartUserComponent = ({ userUuid }) => {
   const getPesananByUserUuid = async () => {
     try {
       const pesananStatusNol = await axios.get(
-        `http://localhost:5000/pesananuser/${userUuid}`
+        `https://react-be-theta.vercel.app/pesananuser/${userUuid}`
       );
       // Periksa apakah pesananStatusNol.data ada dan memiliki panjang lebih dari 0
       if (pesananStatusNol.data.statusPesanan === 0) {
@@ -71,7 +71,7 @@ const CartUserComponent = ({ userUuid }) => {
   const getPesananDetail = async (param) => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/pesanandetailconst/${param}`
+        `https://react-be-theta.vercel.app/pesanandetailconst/${param}`
       );
       console.log(response.data);
       if (response.data.length > 0) {
@@ -103,7 +103,7 @@ const CartUserComponent = ({ userUuid }) => {
   const deletePesananByUserUUid = async () => {
     try {
       await axios.delete(
-        `http://localhost:5000/pesananuseruuid/${newUserUuid}`
+        `https://react-be-theta.vercel.app/pesananuseruuid/${newUserUuid}`
       );
     } catch (error) {
       console.error("Error delete pesanan:", error);
@@ -113,7 +113,7 @@ const CartUserComponent = ({ userUuid }) => {
   const deletePesananDetail = async (pesananDetailUuid) => {
     try {
       const response = await axios.delete(
-        `http://localhost:5000/pesanandetail/${pesananDetailUuid}`
+        `https://react-be-theta.vercel.app/pesanandetail/${pesananDetailUuid}`
       );
       const updateTotalPesanan = pesananTotal - response.data.subtotal;
       if (updateTotalPesanan === 0) {
@@ -123,11 +123,14 @@ const CartUserComponent = ({ userUuid }) => {
         window.location.reload();
       } else {
         setPesananTotal(updateTotalPesanan);
-        await axios.patch(`http://localhost:5000/pesanan/${pesananUuid}`, {
-          total: updateTotalPesanan,
-          tanggalPesanan: new Date().toISOString(),
-          // Menambahkan subtotal ke total yang ada
-        });
+        await axios.patch(
+          `https://react-be-theta.vercel.app/pesanan/${pesananUuid}`,
+          {
+            total: updateTotalPesanan,
+            tanggalPesanan: new Date().toISOString(),
+            // Menambahkan subtotal ke total yang ada
+          }
+        );
         getPesananDetail();
       }
       setMessageVisible(true);
@@ -263,7 +266,8 @@ const CartUserComponent = ({ userUuid }) => {
                 Rp. {pesananTotal.toLocaleString()}
               </td>
               <td className="text-center">
-                <Link to={`/checkout/${pesananUuid}`} 
+                <Link
+                  to={`/checkout/${pesananUuid}`}
                   className={`py-4 px-2 bg-purple-300 text-white mb-4 rounded-lg hover:bg-purple-700 ${
                     totalButton ? "hidden" : ""
                   }`}

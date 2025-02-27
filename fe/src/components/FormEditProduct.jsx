@@ -12,21 +12,20 @@ const FormAddProduct = () => {
   const [preview, setPreview] = useState("");
   const [categories, setCategories] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [url, setUrl] = useState("")
+  const [url, setUrl] = useState("");
   const { id } = useParams();
 
   useEffect(() => {
     const getProductById = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/products/${id}`
+          `https://react-be-theta.vercel.app/products/${id}`
         );
         setName(response.data.name);
         setPrice(response.data.price);
         setCategoryId(response.data.categoryId);
-        setUrl(response.data.url)
+        setUrl(response.data.url);
         setFile(response.data.image);
-        
       } catch (error) {
         if (error.response) {
           setMsg(error.response.data.msg);
@@ -45,7 +44,9 @@ const FormAddProduct = () => {
     // Mengambil daftar kategori saat komponen dimuat
     const getCategories = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/category");
+        const response = await axios.get(
+          "https://react-be-theta.vercel.app/category"
+        );
         setCategories(response.data); // Menyimpan daftar kategori dalam state
       } catch (error) {
         console.error("Gagal mengambil kategori:", error);
@@ -68,11 +69,15 @@ const FormAddProduct = () => {
         console.log(pair[0] + ": " + pair[1]);
       }
 
-      await axios.patch(`http://localhost:5000/products/${id}`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      await axios.patch(
+        `https://react-be-theta.vercel.app/products/${id}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
       navigate("/admin/products");
     } catch (error) {
       if (error.response) {

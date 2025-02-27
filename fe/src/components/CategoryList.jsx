@@ -21,12 +21,16 @@ const Categorylist = ({ updateCategoryList, setUpdateCategoryList }) => {
   }, [updateCategoryList]);
 
   const getCategory = async () => {
-    const response = await axios.get("http://localhost:5000/category");
+    const response = await axios.get(
+      "https://react-be-theta.vercel.app/category"
+    );
     setCategory(response.data);
   };
 
   const deleteCategory = async (categoryId) => {
-    await axios.delete(`http://localhost:5000/category/${categoryId}`);
+    await axios.delete(
+      `https://react-be-theta.vercel.app/category/${categoryId}`
+    );
     setUpdateCategoryList(!updateCategoryList); // Memperbarui updateCategoryList
   };
 

@@ -22,7 +22,9 @@ const FormAddProduct = () => {
     // Mengambil daftar kategori saat komponen dimuat
     const getCategories = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/category");
+        const response = await axios.get(
+          "https://react-be-theta.vercel.app/category"
+        );
         setCategories(response.data); // Menyimpan daftar kategori dalam state
       } catch (error) {
         console.error("Gagal mengambil kategori:", error);
@@ -39,20 +41,23 @@ const FormAddProduct = () => {
       formData.append("price", price);
       formData.append("categoryId", categoryId);
       formData.append("file", file); // Menambahkan categoryId ke FormData// Menambahkan gambar ke FormData
-      const response = await axios.post("http://localhost:5000/products", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.post(
+        "https://react-be-theta.vercel.app/products",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
       navigate("/admin/products");
-      setMsg(response.data.data.msg)
+      setMsg(response.data.data.msg);
     } catch (error) {
       if (error.response) {
         setMsg(error.response.data.msg);
       }
     }
   };
-  
 
   return (
     <div className="font-montserrat">

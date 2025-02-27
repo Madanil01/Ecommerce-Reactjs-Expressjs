@@ -10,7 +10,7 @@ const FormAddCategory = ({ triggerCategoryListUpdate }) => {
   const saveCategory = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5000/category", {
+      await axios.post("https://react-be-theta.vercel.app/category", {
         name: name,
       });
       navigate("/admin/category");

@@ -7,7 +7,6 @@ const ProductList = ({ searchQuery, handleSearch }) => {
   const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
-  
 
   useEffect(() => {
     getProducts();
@@ -15,9 +14,11 @@ const ProductList = ({ searchQuery, handleSearch }) => {
 
   const getProducts = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/products");
+      const response = await axios.get(
+        "https://react-be-theta.vercel.app/products"
+      );
       let filteredProducts = response.data;
-      console.log(response.data)
+      console.log(response.data);
 
       if (searchQuery) {
         filteredProducts = filteredProducts.filter((product) =>
@@ -42,7 +43,9 @@ const ProductList = ({ searchQuery, handleSearch }) => {
 
   const deleteProduct = async (productId) => {
     try {
-      await axios.delete(`http://localhost:5000/products/${productId}`);
+      await axios.delete(
+        `https://react-be-theta.vercel.app/products/${productId}`
+      );
       getProducts();
     } catch (error) {
       console.error("Error deleting product:", error);
@@ -161,15 +164,15 @@ export default ProductList;
 //   }, []);
 
 //   const getProducts = async () => {
-//     const response = await axios.get("http://localhost:5000/products");
+//     const response = await axios.get("https://react-be-theta.vercel.app/products");
 //     setProducts(response.data);
 //     console.log(response.data);
 //   };
 
-  // const deleteProduct = async (productId) => {
-  //   await axios.delete(`http://localhost:5000/products/${productId}`);
-  //   getProducts();
-  // };
+// const deleteProduct = async (productId) => {
+//   await axios.delete(`https://react-be-theta.vercel.app/products/${productId}`);
+//   getProducts();
+// };
 
 //   return (
 //     <div>

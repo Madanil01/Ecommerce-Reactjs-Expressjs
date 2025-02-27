@@ -22,7 +22,7 @@ const CheckOutComponent = ({ pesananUuid }) => {
   const getPesanan = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/pesanan/${pesananUuid}`
+        `https://react-be-theta.vercel.app/pesanan/${pesananUuid}`
       );
       getPesananDetailByPesananUuid(response.data.uuid);
       setTotal(response.data.total);
@@ -35,7 +35,7 @@ const CheckOutComponent = ({ pesananUuid }) => {
   const getPesananDetailByPesananUuid = async (param) => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/pesanandetailconst/${param}`
+        `https://react-be-theta.vercel.app/pesanandetailconst/${param}`
       );
       //   console.log(response.data);
       if (response.data.length > 0) {
@@ -66,7 +66,7 @@ const CheckOutComponent = ({ pesananUuid }) => {
   const getProductData = async (productId) => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/productsconst/${productId}`
+        `https://react-be-theta.vercel.app/productsconst/${productId}`
       );
       //   console.log(response.data);
       return response.data;
@@ -79,7 +79,7 @@ const CheckOutComponent = ({ pesananUuid }) => {
   const getVariasiData = async (productId, variasiId) => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/variasiconst/${variasiId}?productId=${productId}&`
+        `https://react-be-theta.vercel.app/variasiconst/${variasiId}?productId=${productId}&`
       );
       //   console.log(response.data);
       return response.data;

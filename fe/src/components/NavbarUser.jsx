@@ -59,37 +59,35 @@ const NavbarUser = () => {
       const response = await axios.get(
         `https://react-be-theta.vercel.app/pesananuser/${param}`
       );
-      if(response.data != null){
-       if (response.data.statusPesanan === 0) {
-         setPesananUuid(response.data.uuid);
-         console.log(response.data.uuid);
-         getPesananDetail(response.data.uuid); // Panggil getPesananDetail dengan pesananUuid yang didapat
-       }
+      if (response.data != null) {
+        if (response.data.statusPesanan === 0) {
+          setPesananUuid(response.data.uuid);
+          console.log(response.data.uuid);
+          getPesananDetail(response.data.uuid); // Panggil getPesananDetail dengan pesananUuid yang didapat
+        }
       }
-      
     } catch (error) {
       console.error("Kesalahan saat mengambil pesanan:", error);
     }
   };
 
- const getPesananDetail = async (param) => {
-   try {
-     const response = await axios.get(
-       `http://localhost:5000/pesanandetailconst/${param}`
-     );
+  const getPesananDetail = async (param) => {
+    try {
+      const response = await axios.get(
+        `https://react-be-theta.vercel.app/pesanandetailconst/${param}`
+      );
 
-     // Periksa apakah respons berisi data
-     if (Array.isArray(response.data)) {
-       const jumlahBaris = response.data.length;
-       setJumlahPesananDetail(jumlahBaris); // Set jumlahPesananDetail sesuai dengan jumlah data
-     } else {
-       setJumlahPesananDetail(0); // Set jumlahPesananDetail ke 0 jika tidak ada data atau respons bukan array
-     }
-   } catch (error) {
-     console.error("Kesalahan saat mengambil pesanan detail:", error);
-   }
- };
-
+      // Periksa apakah respons berisi data
+      if (Array.isArray(response.data)) {
+        const jumlahBaris = response.data.length;
+        setJumlahPesananDetail(jumlahBaris); // Set jumlahPesananDetail sesuai dengan jumlah data
+      } else {
+        setJumlahPesananDetail(0); // Set jumlahPesananDetail ke 0 jika tidak ada data atau respons bukan array
+      }
+    } catch (error) {
+      console.error("Kesalahan saat mengambil pesanan detail:", error);
+    }
+  };
 
   return (
     <div className="font-montserrat">

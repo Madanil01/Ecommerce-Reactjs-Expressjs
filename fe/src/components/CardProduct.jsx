@@ -14,7 +14,9 @@ const CardProduct = ({ searchQuery, handleSearch }) => {
 
   const getProducts = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/products");
+      const response = await axios.get(
+        "https://react-be-theta.vercel.app/products"
+      );
       let filteredProducts = response.data;
 
       if (searchQuery) {
