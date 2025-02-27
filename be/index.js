@@ -36,14 +36,27 @@ const store = new sessionStore({
 //   .catch((error) => {
 //     console.error("Gagal membuat tabel Product:", error);
 //   });
+// app.use(
+//   session({
+//     secret: '21312313eg2hg321hvjhdsvjfvjsdvfvjsdvjvwulasnldca',
+//     resave: false,
+//     saveUninitialized: true,
+//     store: store,
+//     cookie: {
+//       secure: true,
+//     },
+//   })
+// );
 app.use(
   session({
-    secret: '21312313eg2hg321hvjhdsvjfvjsdvfvjsdvjvwulasnldca',
+    secret: "21312313eg2hg321hvjhdsvjfvjsdvfvjsdvjvwulasnldca",
     resave: false,
     saveUninitialized: true,
     store: store,
     cookie: {
-      secure: true,
+      secure: process.env.NODE_ENV === "production", // Hanya true di production
+      httpOnly: true, // Lindungi cookie dari JavaScript
+      sameSite: "None", // Agar bisa diakses di domain berbeda
     },
   })
 );
