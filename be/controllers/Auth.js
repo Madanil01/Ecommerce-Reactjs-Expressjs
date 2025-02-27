@@ -11,6 +11,7 @@ export const Login = async (req, res) => {
   const match = await argon2.verify(user.password, req.body.password);
   if (!match) return res.status(400).json({ msg: "Wrong Password" });
   req.session.userId = user.uuid;
+  console.log(req.session)
   const uuid = user.uuid;
   const name = user.name;
   const email = user.email;
