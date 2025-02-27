@@ -21,21 +21,36 @@ export const LoginUser = createAsyncThunk("user/LoginUser", async (user, thunkAP
       password: user.password,
     }, { withCredentials: true }); // 🔥 Wajib agar cookie session tersimpan
 
+    // ✅ Simpan UUID ke localStorage
+    if (response.data?.uuid) {
+      localStorage.setItem("uuid", response.data.uuid);
+    }
+
     return response.data;
   } catch (error) {
     return thunkAPI.rejectWithValue(error.response?.data?.msg || "Login gagal");
   }
 });
 
+
 // ✅ Get User Info (Cek session)
 export const getMe = createAsyncThunk("user/getMe", async (_, thunkAPI) => {
   try {
-    const response = await axios.get(`${API_URL}/me`, { withCredentials: true });
+    const uuid = localStorage.getItem("uuid") || ""; // 🔥 Ambil UUID dari localStorage (opsional)
+
+    const response = await axios.get(`${API_URL}/me`, {
+      withCredentials: true,
+      headers: {
+        Authorization: `Bearer ${uuid}`, // ✅ Kirim UUID di Headers (jika perlu)
+      },
+    });
+
     return response.data;
   } catch (error) {
     return thunkAPI.rejectWithValue(error.response?.data?.msg || "Tidak dapat mengambil data user");
   }
 });
+
 
 // ✅ Register User
 export const RegisterUser = createAsyncThunk("user/RegisterUser", async (user, thunkAPI) => {
