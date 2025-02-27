@@ -75,6 +75,7 @@ export const RegisterUser = createAsyncThunk("user/RegisterUser", async (user, t
 export const LogOut = createAsyncThunk("user/LogOut", async (_, thunkAPI) => {
   try {
     await axios.delete(`${API_URL}/logout`, { withCredentials: true }); // 🔥 Pastikan session terhapus
+    localStorage.setItem("uuid", '');
   } catch (error) {
     return thunkAPI.rejectWithValue(error.response?.data?.msg || "Logout gagal");
   }
