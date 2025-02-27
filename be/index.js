@@ -26,7 +26,7 @@ const store = new sessionStore({ db: db });
 app.use(
   cors({
     credentials: true,
-    origin: "https://ecommerce-reactjs-expressjs.vercel.app",
+    origin: ["https://ecommerce-reactjs-expressjs.vercel.app", "https://ecommerce-reactjs-expressjs.vercel.app/"],
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
