@@ -51,15 +51,17 @@ app.use(
   session({
     secret: "21312313eg2hg321hvjhdsvjfvjsdvfvjsdvjvwulasnldca",
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false, // Ubah ke false agar tidak menyimpan session kosong
     store: store,
     cookie: {
-      secure: process.env.NODE_ENV === "production", // Hanya true di production
-      httpOnly: true, // Lindungi cookie dari JavaScript
-      sameSite: "None", // Agar bisa diakses di domain berbeda
+      secure: process.env.NODE_ENV === "production", // Hanya true di production (HTTPS)
+      httpOnly: true, // Lindungi dari JavaScript (XSS attack)
+      sameSite: "None", // Agar bisa diakses lintas domain
+      maxAge: 24 * 60 * 60 * 1000, // 🕒 24 jam (1 hari)
     },
   })
 );
+
 app.use("/test", (req, res) => {
   res.send("Hello, World!");
 });
