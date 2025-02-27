@@ -23,14 +23,32 @@ const sessionStore = SequelizeStore(session.Store);
 const store = new sessionStore({ db: db });
 
 // 🔥 [1] Perbaiki Middleware CORS (Dipanggil Sebelum Session)
-app.use(
-  cors({
-    credentials: true,
-    origin: ["https://ecommerce-reactjs-expressjs.vercel.app", "https://ecommerce-reactjs-expressjs.vercel.app/"],
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-  })
-);
+// app.use(
+//   cors({
+//     credentials: true,
+//     origin: ["https://ecommerce-reactjs-expressjs.vercel.app", "https://ecommerce-reactjs-expressjs.vercel.app/"],
+//     methods: ["GET", "POST", "PUT", "DELETE"],
+//     allowedHeaders: ["Content-Type", "Authorization"],
+//   })
+// );
+app.use((req, res, next) => {
+  const allowedOrigins = [
+    "https://ecommerce-reactjs-expressjs.vercel.app",
+    "https://react-be-theta.vercel.app",
+  ];
+  const origin = req.headers.origin;
+  if (allowedOrigins.includes(origin)) {
+    res.setHeader("Access-Control-Allow-Origin", origin);
+  }
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+
+  if (req.method === "OPTIONS") {
+    return res.sendStatus(200);
+  }
+  next();
+});
 
 // 🔥 [2] Setup Express Session
 app.use(
