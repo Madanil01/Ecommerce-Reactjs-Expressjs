@@ -48,7 +48,8 @@ export const Register = async (req, res) => {
 };
 
 export const Me = async (req, res) => {
-  console.log(req.session, req)
+  console.log("Session: ", req.session); // 🔥 Debug session
+  console.log("Cookies: ", req.cookies); // 🔥 Debug cookies
   if (!req.session.userId) {
     return res.status(401).json({ msg: "Mohon login ke akun Anda!" });
   }
