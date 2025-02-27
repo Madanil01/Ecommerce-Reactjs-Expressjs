@@ -50,18 +50,27 @@ export const Register = async (req, res) => {
 export const Me = async (req, res) => {
   console.log("Session: ", req.session); // 🔥 Debug session
   console.log("Cookies: ", req.cookies); // 🔥 Debug cookies
-  if (!req.session.userId) {
+  console.log("Headers: ", req.headers); // 🔥 Debug headers
+
+  // Ambil UUID dari Header (yang dikirim dari Frontend)
+  const uuid = req.headers.authorization?.split("Bearer ")[1]; 
+
+  if (!uuid) {
     return res.status(401).json({ msg: "Mohon login ke akun Anda!" });
   }
+
   const user = await Users.findOne({
     attributes: ["uuid", "username", "email", "role"],
     where: {
-      uuid: req.session.userId,
+      uuid: uuid, // ✅ Cari user berdasarkan UUID dari frontend
     },
   });
+
   if (!user) return res.status(404).json({ msg: "User tidak ditemukan" });
+
   res.status(200).json(user);
 };
+
 
 export const logOut = (req, res) => {
   req.session.destroy((err) => {
